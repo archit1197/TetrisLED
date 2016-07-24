@@ -1,6 +1,7 @@
 import time
 import os
 import random
+import sys
 
 board_x=8
 board_y=8
@@ -27,7 +28,6 @@ def print_matrix():
 		print matrix[i]
 	print "--------"
 	time.sleep(1)
-	os.system('clear')
 
 def setp(matrix,object):
 	
@@ -105,6 +105,7 @@ class piece:
 	def rotate(self):
 		if self.shape=='l':
 			if(self.orientation%4==0):
+
 				if(matrix[self.listpoints[2][0]+1][self.listpoints[2][1]-1]==0 and matrix[self.listpoints[0][0]-1][self.listpoints[0][1]+1]==0):
 					self.listpoints[2][0]+=1
 					self.listpoints[2][1]-=1
@@ -171,11 +172,11 @@ class piece:
 
 	
 
-
+'''
 line=piece('l',[[0,1],[1,1],[2,1]],1)
 square=piece('s',[[0,0],[0,1],[1,0],[1,1]],0)
 triangle=piece('t',[[0,0],[0,1],[0,2],[1,2]],0)
-
+'''
 """
 for i in range(9):
 	
@@ -191,15 +192,15 @@ for i in range(9):
 def choose_object():
 
 	x=random.randrange(0,3,1)
-	x=2
+	
 	if(x==0):
-		thing=line
+		thing=piece('l',[[0,1],[1,1],[2,1]],1)
 
 	elif(x==1):
-		thing=square
+		thing=piece('s',[[0,0],[0,1],[1,0],[1,1]],0)
 
 	elif(x==2):
-		thing=triangle
+		thing=piece('t',[[0,0],[0,1],[0,2],[1,2]],0)
 
 	return thing	
 
@@ -208,15 +209,15 @@ def choose_object():
 
 thing=choose_object()
 print_matrix()
-y=thing.down()
-print_matrix()
+
 while(1):
 	y=True
 	
 	
-
-	choice='r'
-
+	print_matrix()
+	#choice=input("Enter Choice: ")	
+	#choice=sys.stdin.read(1)
+	choice=raw_input("Enter choice: ")
 	if choice=='a':
 		x=thing.left()
 	elif choice=='s':
@@ -228,9 +229,11 @@ while(1):
 
 
 	print_matrix()
-	
+	os.system('clear')
+
 
 	if y==False:
+
 		thing=choose_object()
 
 		
