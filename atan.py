@@ -103,65 +103,76 @@ class piece:
 		
 
 	def rotate(self):
-		if(self.shape=='l'):
-			if(self.orientation==0):	
-				max1=-1
-				max2=-1
-				i_max2=-1
-				i_max1=-1
-				for i in range(len(self.listpoints)):
-					max1=max(self.listpoints[i][0],max1)
-					i_max1=i
+		if self.shape=='l':
+			if(self.orientation%4==0):
+				if(matrix[self.listpoints[2][0]+1][self.listpoints[2][1]-1]==0 and matrix[self.listpoints[0][0]-1][self.listpoints[0][1]+1]==0):
+					self.listpoints[2][0]+=1
+					self.listpoints[2][1]-=1
+					self.listpoints[0][0]-=1
+					self.listpoints[0][1]+=1
+				else:
+					return False
+			elif(self.orientation%4==1):
+				if(matrix[self.listpoints[2][0]-1][self.listpoints[2][1]+1]==0 and matrix[self.listpoints[0][0]+1][self.listpoints[0][1]-1]==0):
+					self.listpoints[2][0]-=1
+					self.listpoints[2][1]+=1
+					self.listpoints[0][0]+=1
+					self.listpoints[0][1]-=1
+				else:
+					return False
+			self.orientation=1-self.orientation
 
-				for i in range(len(self.listpoints)):
-					if (self.listpoints[i][0]!=max1):
-						max2=max(self.listpoints[i][0],max2)	
-						i_max2=i
+		elif self.shape=='s':
+			return True
 
-				self.listpoints[i_max1][0]-=1
-				self.listpoints[i_max1][1]+=1
+		if self.shape=='t':
+			if(self.orientation%4==0):
+				if(matrix[self.listpoints[2][0]+1][self.listpoints[2][1]-1]==0 and matrix[self.listpoints[0][0]-1][self.listpoints[0][1]+1]==0 and matrix[self.listpoints[3][0]][self.listpoints[3][1]-2]==0):
+					self.listpoints[2][0]+=1
+					self.listpoints[2][1]-=1
+					self.listpoints[0][0]-=1
+					self.listpoints[0][1]+=1
+					self.listpoints[3][1]-=2
+				else:
+					return False
 
-				for i in range(len(self.listpoints)):
-					if(i!=i_max1 and i!=i_max2):
-						self.listpoints[i][0]+=1
-						self.listpoints[i][1]-=1
+			elif(self.orientation%4==1):
+				if(matrix[self.listpoints[2][0]-1][self.listpoints[2][1]+1]==0 and matrix[self.listpoints[0][0]+1][self.listpoints[0][1]-1]==0 and matrix[self.listpoints[3][0]-2][self.listpoints[3][1]]==0):
+					self.listpoints[2][0]-=1
+					self.listpoints[2][1]+=1
+					self.listpoints[0][0]+=1
+					self.listpoints[0][1]-=1
+					self.listpoints[3][0]-=2
+				else:
+					return False
+			elif(self.orientation%4==2):
+				if(matrix[self.listpoints[2][0]+1][self.listpoints[2][1]-1]==0 and matrix[self.listpoints[0][0]-1][self.listpoints[0][1]+1]==0 and matrix[self.listpoints[3][0]][self.listpoints[3][1]+2]==0):
+					self.listpoints[2][0]+=1
+					self.listpoints[2][1]-=1
+					self.listpoints[0][0]-=1
+					self.listpoints[0][1]+=1
+					self.listpoints[3][1]+=2
+				else:
+					return False
 
-				self.orientation=1-self.orientation
+			elif(self.orientation%4==3):
+				if(matrix[self.listpoints[2][0]-1][self.listpoints[2][1]+1]==0 and matrix[self.listpoints[0][0]+1][self.listpoints[0][1]-1]==0 and matrix[self.listpoints[3][0]+2][self.listpoints[3][1]]==0):
+					self.listpoints[2][0]-=1
+					self.listpoints[2][1]+=1
+					self.listpoints[0][0]+=1
+					self.listpoints[0][1]-=1
+					self.listpoints[3][0]+=2
+				else:
+					return False
+			self.orientation+=1
 
-				print self.listpoints
-
-			elif (self.orientation==1):	
-				max1=-1
-				max2=-1
-				i_max2=-1
-				i_max1=-1
-				for i in range(len(self.listpoints)):
-					max1=max(self.listpoints[i][1],max1)
-					i_max1=i
-
-				for i in range(len(self.listpoints)):
-					if (self.listpoints[i][1]!=max1):
-						max2=max(self.listpoints[i][1],max2)	
-						i_max2=i
-
-				self.listpoints[i_max1][0]-=1
-				self.listpoints[i_max1][1]-=1
-
-				for i in range(len(self.listpoints)):
-					if(i!=i_max1 and i!=i_max2):
-						self.listpoints[i][0]+=1
-						self.listpoints[i][1]+=1
-
-				self.orientation=1-self.orientation
-					
-				print self.listpoints
 		return True
 
 
 	
 
 
-line=piece('l',[[0,1],[1,1],[2,1]],0)
+line=piece('l',[[0,1],[1,1],[2,1]],1)
 square=piece('s',[[0,0],[0,1],[1,0],[1,1]],0)
 triangle=piece('t',[[0,0],[0,1],[0,2],[1,2]],0)
 
@@ -180,7 +191,7 @@ for i in range(9):
 def choose_object():
 
 	x=random.randrange(0,3,1)
-	x=0
+	x=2
 	if(x==0):
 		thing=line
 
