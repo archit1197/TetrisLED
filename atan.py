@@ -1,6 +1,7 @@
 import time
 import os
 import random
+import signal
 import sys
 
 board_x=8
@@ -27,7 +28,7 @@ def print_matrix():
 	for i in range(8):
 		print matrix[i]
 	print "--------"
-	time.sleep(1)
+	
 
 def setp(matrix,object):
 	
@@ -208,7 +209,7 @@ def choose_object():
 	
 
 thing=choose_object()
-print_matrix()
+
 
 while(1):
 	y=True
@@ -217,7 +218,17 @@ while(1):
 	print_matrix()
 	#choice=input("Enter Choice: ")	
 	#choice=sys.stdin.read(1)
-	choice=raw_input("Enter choice: ")
+	def signal_handler(signum, frame):
+		raise Exception("Timed out!")
+
+	signal.signal(signal.SIGALRM, signal_handler)
+	signal.alarm(1)   # one seconds
+	try:
+		choice=raw_input("Enter choice: ")
+
+	except Exception, msg:
+		choice='s'
+
 	if choice=='a':
 		x=thing.left()
 	elif choice=='s':
@@ -233,7 +244,6 @@ while(1):
 
 
 	if y==False:
-
 		thing=choose_object()
 
 		
