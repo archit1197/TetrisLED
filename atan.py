@@ -261,12 +261,15 @@ while(1):
 
 	if choice=='a':
 		x=thing.left()
+		y=thing.down()
 	elif choice=='s':
 		y=thing.down()
 	elif choice=='d':
 		z=thing.right()
+		y=thing.down()
 	elif choice=='r':
-		w=thing.rotate()	
+		w=thing.rotate()
+		y=thing.down()
 
 
 	print_matrix(matrix)
